@@ -1,0 +1,51 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{hyperref}
+
+\title{CS2467: Project Proposal}
+\author{Hrsh Venket}
+\date{October 2023}
+
+\begin{document}
+
+\maketitle
+
+\section{Project 1: Basic Hawkeye System (subtantial project)}
+
+I want to work on recreating simple version of the Hawkeye system, originally designed for making LBW calls in cricket. This is the same technology you may have seen in many famous sports including cricket, volleyball, tennis, andand badminton. Hawkeye is proprietary technology owned by Sony so I look to implement \href{https://ietresearch.onlinelibrary.wiley.com/doi/full/10.1049/iet-ipr.2020.0757}{this paper}
+My plan is outlined as follows: Capturing of video, ball tracking and 3d reconstruction, and trajectory prediction.
+
+\subsection{Capturing video}
+
+The actual hawkeye system uses 6+ high quality cameras capturing footage from the top of stadiums at upto 340 FPS. Of course, this is very expensive for me to do, so I will work to use at least 2 60 fps stationary phone cameras to take video of a ball being thrown. 
+
+The systems I have looked are not too sensitive to slight movement of cameras from things like wind, so I think this will be sufficient to start off with.
+
+\subsection{Camera Calibration}
+
+I will look to use a camera like an iphone or some film camera borrowed from the media studies department, wherin the internal patamaters are measured and known. I will then calibrate the extrinsic parameters with the video I take.
+
+\subsection{Ball Tracking and 3d reconstruction}
+
+The broad steps for this are (a) 2d ball detection (b) 3d ball reconstruction (c) 3d ball tracking. For the first step, the paper trains a CNN to detect the ball, but based on availablity of compute, I may use a generic hugging face object detection model. For the second step, using the extrinsic parameters I will match features from different views, and use the epipoles of each camera to reconstruct the ball in 3d. The third step will be to resolve any conflicts and improve detection of the ball in 3d.
+
+\subsection{Trajectory Prediction}
+
+I aim to use kalman filtering or other similar method for (a) noise removal (b) path prediction between visible frames (b) path prediction after visible frames. For noise removal, I may use this alongside the ball tracking step
+
+\subsection{Evaluation}
+
+My goal is to make this function for realtime video, but if this proves to be too slow, I will give a demo where I will show the ball's trajectory being reconstructed in 3d from 2 or more cameras.
+
+
+% - Track movement of the ball and predict trajectory
+%   - Capture Video
+%   - Track ball
+%     - HSV colour detection 
+%     - Ball tracker using pretrained object detector model from hugging face?
+%   - Preduct Trajectory
+%     - Optical flow using Kalman Filter Path Prediction
+%     - Khan & Shah, “Consistent labeling of tracked objects in multiple cameras with overlapping fields of view”, Transactions on Pattern analysis and machine intelligence, volume 25, p1355 (2003).
+% - 
+
+\end{document}
